@@ -119,7 +119,7 @@ class TestBooksCollector:
         'name, genre',
         [
             ['Том и Джерри', 'Мультфильмы'],
-            ['Война и мир', 'Классика']
+            ['Отроки во вселенной', 'Фантастика']
         ]
     )
     def test_get_books_with_specific_genre_empty_list_book_false_genre(

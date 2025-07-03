@@ -61,7 +61,7 @@
     get_books_with_specific_genre в случае, когда запрашиваемый 
     жанр отсутствует в коллекции книг
 ```
-    @pytest.mark.parametrize('name, genre',[['Том и Джерри', 'Мультфильмы'],['Война и мир', 'Классика']])
+    @pytest.mark.parametrize('name, genre',[['Том и Джерри', 'Мультфильмы'],['Отроки во вселенной', 'Фантастика']])
     def test_get_books_with_specific_genre_empty_list_book_false_genre(self, collector, name, genre):
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
