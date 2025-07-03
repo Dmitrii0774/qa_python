@@ -98,7 +98,10 @@
         for name in books:
             collector.add_new_book(name)
             collector.add_book_in_favorites(name)
-        assert not collector.delete_book_from_favorites('Книга_4')
+        collector.delete_book_from_favorites('Книга_4')
+        favorites_list = collector.get_list_of_favorites_books()
+        assert len(favorites_list) == len(books)
+        assert 'Книга_4' not in favorites_list
 ```
 ---
 11. Тест проверяет корректность получения списка книг из избранного,

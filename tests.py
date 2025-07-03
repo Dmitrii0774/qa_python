@@ -201,8 +201,13 @@ class TestBooksCollector:
         for name in books:
             collector.add_new_book(name)
             collector.add_book_in_favorites(name)
-
-        assert not collector.delete_book_from_favorites('Книга_4')
+        # Пробуем удалить несуществующую книгу
+        collector.delete_book_from_favorites('Книга_4')
+        # Проверяем, что список не изменился
+        favorites_list = collector.get_list_of_favorites_books()
+        assert len(favorites_list) == len(books)
+        # Проверяем отсутствие удаляемой книги в списке
+        assert 'Книга_4' not in favorites_list
 
     def test_get_list_of_favorites_books_not_empty(self, collector):
         """
