@@ -232,3 +232,85 @@ class TestBooksCollector:
         # Проверяем содержимое списка
         for book in books:
             assert book in favorites_list
+
+    def test_set_book_genre(self, collector):
+        """
+        Тест проверки корректной установки жанра книги
+        """
+        book_name = 'Марсианин'
+        genre = 'Фантастика'
+        collector.add_new_book(book_name)
+        collector.set_book_genre(book_name, genre)
+
+        # Проверяем установку жанра
+        assert collector.get_books_genre()[book_name] == genre
+
+    def test_get_books_with_specific_genre(self, collector):
+        """
+        Тест проверки получения книг определенного жанра
+        """
+        books = {
+            'Марсианин': 'Фантастика',
+            'Оно': 'Ужасы',
+            'Шерлок Холмс': 'Детективы',
+            'Том и Джерри': 'Мультфильмы',
+            'Один дома': 'Комедии'
+        }
+
+        for name, genre in books.items():
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
+
+        # Проверяем получение всех книг жанра Фантастика
+        assert collector.get_books_with_specific_genre('Фантастика') == ['Марсианин']
+
+    def test_get_books_genre(self, collector):
+        """
+        Тест проверки корректности получения словаря жанров
+        """
+        books = {
+            'Интерстеллар': 'Фантастика',
+            'Сияние': 'Ужасы',
+            'Код да Винчи': 'Детективы',
+            'Ну, погоди!': 'Мультфильмы',
+            'Американский пирог': 'Комедии'
+        }
+
+        for name, genre in books.items():
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
+
+        # Проверяем весь словарь жанров
+        assert collector.get_books_genre() == books
+
+    def test_get_books_for_children(self, collector):
+        """
+        Тест проверки получения книг для детей
+        """
+        books = {
+            'Ну, погоди!': 'Мультфильмы',  # Детская
+            'Марсианин': 'Фантастика',     # Детская
+            'Том и Джерри': 'Мультфильмы',  # Детская
+            'Оно': 'Ужасы',                # Не детская
+            'Малыш и Карлсон': 'Мультфильмы',  # Детская
+            'Гарри Поттер': 'Фантастика',  # Детская
+            'Шерлок Холмс': 'Детективы'   # Не детская
+        }
+
+        # Добавляем все книги в коллектор
+        for name, genre in books.items():
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
+
+        # Формируем ожидаемый результат - без жанров Ужасы и Детективы
+        expected_children_books = [
+            'Ну, погоди!',
+            'Марсианин',
+            'Том и Джерри',
+            'Малыш и Карлсон',
+            'Гарри Поттер'
+        ]
+
+        # Проверяем результат
+        result = collector.get_books_for_children()
+        assert sorted(result) == sorted(expected_children_books)
