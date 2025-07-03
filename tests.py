@@ -31,7 +31,7 @@ class TestBooksCollector:
         # проверяем, что добавилось именно две
         # словарь books_rating, который нам возвращает метод books_genre,
         # имеет длину 2
-        assert len(collector.books_genre) == 2
+        assert len(collector.get_books_genre()) == 2
 
     # напиши свои тесты ниже
     # чтобы тесты были независимыми в каждом из них создавай отдельный
@@ -52,7 +52,7 @@ class TestBooksCollector:
         collector.add_new_book(long_name)
 
         # Проверяем, что книга не была добавлена в коллекцию
-        assert len(collector.books_genre) == 0
+        assert len(collector.get_books_genre()) == 0
 
     def test_add_duplicate_book(self, collector):
         """
@@ -68,7 +68,7 @@ class TestBooksCollector:
         collector.add_new_book(book_name)
 
         # Проверяем, что длина не изменилась
-        assert len(collector.books_genre) == initial_length
+        assert len(collector.get_books_genre()) == initial_length
 
     def test_get_book_genre_return_valid_name(self, collector):
         """
