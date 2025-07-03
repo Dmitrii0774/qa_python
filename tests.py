@@ -219,7 +219,11 @@ class TestBooksCollector:
         for name in books:
             collector.add_new_book(name)  # Добавляем книгу в общую коллекцию
             collector.add_book_in_favorites(name)  # в избранное
+        # Получаем список избранных книг
+        favorites_list = collector.get_list_of_favorites_books()
+        # Проверяем, что список не пустой
+        assert len(favorites_list) == len(books)
 
-        # Проверяем, что полученный список избранного не пустой
-        # и содержит добавленные книги
-        assert collector.get_list_of_favorites_books()
+        # Проверяем содержимое списка
+        for book in books:
+            assert book in favorites_list

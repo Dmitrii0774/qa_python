@@ -8,7 +8,7 @@
     def test_add_new_book_add_two_books(self, collector):
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_new_book('Что делать, если ваш кот хочет вас убить')
-        assert len(collector.books_genre) == 2
+        assert len(collector.get_books_genre()) == 2
 ```
 ---
 2. Проверяет поведение коллектора при добавлении книги с названием,
@@ -17,7 +17,7 @@
     def test_add_long_book_name(self, collector):
         long_name = ("Aaaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa a")
         collector.add_new_book(long_name)
-        assert len(collector.books_genre) == 0
+        assert len(collector.get_books_genre()) == 0
 ```
 ---
 3. Проверка защиты от добавления дубликатов
@@ -27,7 +27,7 @@
         collector.add_new_book(book_name) 
         initial_length = len(collector.books_genre)
         collector.add_new_book(book_name)
-        assert len(collector.books_genre) == initial_length
+        assert len(collector.get_books_genre()) == initial_length
 ```
 ---
 4. Проверка корректности получения установленного жанра книги
@@ -109,6 +109,9 @@
         for name in books:
             collector.add_new_book(name)  # Добавляем книгу в общую коллекцию
             collector.add_book_in_favorites(name)  # в избранное
-        assert collector.get_list_of_favorites_books()
+        favorites_list = collector.get_list_of_favorites_books()
+        assert len(favorites_list) == len(books)
+        for book in books:
+            assert book in favorites_list
 ```
 ---
